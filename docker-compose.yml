@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  app:
+    image: webdevops/php-nginx-dev:8.2-alpine
+    restart: on-failure
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/app
+    working_dir: /app
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./data/db:/var/lib/mysql"
